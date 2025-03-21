@@ -2,7 +2,10 @@ import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
-from nltk.tokenize import word_tokenize, sent_tokenize
+nltk.download('omw-1.4')  # Nécessaire pour WordNet
+nltk.download('averaged_perceptron_tagger')  # Pour la lemmatisation
+nltk.download('punkt_french')  # Modèle de tokenization pour le français
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import string
