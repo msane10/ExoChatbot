@@ -10,6 +10,11 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import string
 import streamlit as st
+import spacy
+
+
+# Charger le modèle français
+nlp = spacy.load("fr_core_news_sm")
 
 # Charger le fichier texte et séparer les questions et réponses
 with open("question.txt", 'r', encoding='utf-8') as f:
@@ -24,13 +29,8 @@ for line in data:
 
 # Définir une fonction pour prétraiter le texte
 def preprocess(text):
-    # Tokeniser le texte en mots
-    words = word_tokenize(text)
-    # Supprimer les stopwords et la ponctuation
-    words = [word.lower() for word in words if word.lower() not in stopwords.words('french') and word not in string.punctuation]
-    # Lemmatiser les mots
-    lemmatizer = WordNetLemmatizer()
-    words = [lemmatizer.lemmatize(word) for word in words]
+    doc = nlp(text)
+    words = [token.lemma_.lower() for token in doc if not token.is_stop and not token.is_punct]
     return words
 
 # Définir une fonction pour trouver la réponse la plus pertinente
